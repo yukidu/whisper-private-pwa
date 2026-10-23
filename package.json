@@ -1,0 +1,21 @@
+{
+  "name": "whisper-private-pwa",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Local whisper.cpp transcription PWA",
+  "scripts": {
+    "test": "node --test tests/*.test.js",
+    "check": "npm run test && node --check src/main.js && node --check src/engine.js && node --check src/audio.js",
+    "serve": "python3 scripts/local_server.py"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "license": "MIT",
+  "upstream": {
+    "type": "git",
+    "url": "https://github.com/ggml-org/whisper.cpp",
+    "tag": "v1.9.5"
+  }
+}
