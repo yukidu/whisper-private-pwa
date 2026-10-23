@@ -12,6 +12,17 @@ if ! command -v emcmake >/dev/null 2>&1; then
   .build-tools/emsdk/emsdk activate "$EMSDK_VERSION"
   source .build-tools/emsdk/emsdk_env.sh
 fi
+# Cloudflare Pages build image may omit CMake; install a pinned official binary.
+if ! command -v cmake >/dev/null 2>&1; then
+  CMAKE_VERSION=3.31.12
+  mkdir -p .build-tools/cmake
+  curl -fLSs --retry 3 \
+    "https://github.com/Kitware/CMake/releases/download/v${CMAKE_VERSION}/cmake-${CMAKE_VERSION}-linux-x86_64.tar.gz" \
+    -o .build-tools/cmake.tar.gz
+  tar -xzf .build-tools/cmake.tar.gz -C .build-tools/cmake --strip-components=1
+  export PATH="$PWD/.build-tools/cmake/bin:$PATH"
+fi
+cmake --version
 npm run check
 bash scripts/build-wasm.sh
 bash scripts/assemble.sh
