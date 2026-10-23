@@ -36,4 +36,16 @@ jobs:
           name: whisper-private-pwa-dist
           path: dist/
           retention-days: 7
+      - name: Install real-browser test dependencies
+        run: |
+          npm install --no-save playwright@1.64.1
+          npx playwright install --with-deps chromium
+      - name: Fetch publicly available test audio and tiny model
+        run: |
+          curl -fLSs --retry 3 -o /tmp/ggml-tiny-q5_1.bin https://huggingface.co/ggerganov/whisper.cpp/resolve/main/ggml-tiny-q5_1.bin
+          curl -fLSs --retry 3 -o /tmp/jfk.wav https://raw.githubusercontent.com/ggml-org/whisper.cpp/master/samples/jfk.wav
+          test $(stat -c %s /tmp/ggml-tiny-q5_1.bin) -gt 1000000
+          test $(stat -c %s /tmp/jfk.wav) -gt 1000
+      - name: Real speech recognition and no-upload browser test
+        run: node scripts/browser-e2e.mjs /tmp/ggml-tiny-q5_1.bin /tmp/jfk.wav
       # Deploy only after real browser transcription and privacy regression tests.
