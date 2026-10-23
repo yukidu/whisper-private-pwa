@@ -36,10 +36,10 @@ npm run serve
 
 ## 建立個人 GitHub / Cloudflare（尚待完成）
 
-1. 在 GitHub 新建公開儲存庫 `yukidu/whisper-private-pwa`，並將整份檔案上傳（不含生成的 `dist` 與 `.vendor-source`）。不要加入到任何現有繁星 App 的程式庫。
+1. 在 GitHub 使用已建立的公開儲存庫 `yukidu/whisper-private-pwa`，並將整份檔案上傳（不含生成的 `dist` 與 `.vendor-source`）。不要加入到任何現有繁星 App 的程式庫。
 2. GitHub Actions 在 PR/main 執行測試、從官方 Tag 重建 WASM、輸出 `whisper-private-pwa-dist`。
 3. 先將 Action artifact 下載做真正的 Chrome／Safari／Android／iOS、本機上傳、斷線、MP3／M4A、長檔、逐字稿與安裝測試。不要在驗證前啟動 Production 自動部署。
-4. 建立獨立 Cloudflare Pages 專案，以產物 `dist/` 發布，或驗收後才設定 CI/CD 部署。`_headers` 必須成功套用以支援多執行緒 WASM。**若要真正僅供本人使用，請在正式網址設定 Cloudflare Access（只允許你的 Email 登入）；純粹使用公開 GitHub 儲存庫，不會自動限制公開網站訪客。**
+4. 建立獨立 Cloudflare Pages 專案，以產物 `dist/` 發布，或驗收後才設定 CI/CD 部署。`_headers` 必須成功套用以支援多執行緒 WASM。**公開網站不需要登入；若希望未來限制訪客，須另外設定 Cloudflare Access。**
 5. 驗收正式網址前，不可宣稱 Production 完成，亦不可編造網址。正式部署成功後，需記錄版本識別碼（commit SHA）與上一個已驗收版本，才可提供回復代碼。
 
 ## 必做驗收

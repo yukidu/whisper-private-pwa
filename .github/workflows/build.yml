@@ -1,0 +1,39 @@
+name: Test and build Whisper PWA
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  app:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check app and export tests
+        run: npm run check
+      - name: Prepare Emscripten
+        uses: mymindstorm/setup-emsdk@v14
+        with:
+          version: '3.1.74'
+      - name: Build whisper.cpp from pinned upstream tag
+        run: bash scripts/build-wasm.sh
+      - name: Create production files
+        run: bash scripts/assemble.sh
+      - name: Check runtime files and headers
+        run: |
+          test -s dist/runtime/libmain.js
+          test -s dist/runtime/libmain.wasm
+          test -s dist/_headers
+          test -s dist/sw.js
+      - uses: actions/upload-artifact@v4
+        with:
+          name: whisper-private-pwa-dist
+          path: dist/
+          retention-days: 7
+      # Deploy only after real browser transcription and privacy regression tests.

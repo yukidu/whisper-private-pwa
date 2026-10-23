@@ -1,0 +1,20 @@
+{
+  "name": "Whisper 私人逐字稿",
+  "short_name": "Whisper 私人",
+  "description": "本機語音轉文字，不上傳音檔",
+  "lang": "zh-Hant",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#0c1020",
+  "theme_color": "#10152a",
+  "icons": [
+    {
+      "src": "/icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
