@@ -10,3 +10,4 @@ public/runtime/*
 .env.*
 !.env.example
 dist/
+.build-tools/
